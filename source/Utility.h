@@ -1,3 +1,4 @@
+
 #pragma once
 #include "extensions/Screen.h"
 #include "CRect.h"
@@ -34,3 +35,4 @@ static int32_t GetRandomNumber() {
 static RwTexture* RwTextureRead(const char* name, const char* mask) {
     return plugin::CallAndReturn<RwTexture*, 0x07F3AC0>(name, mask);
 }
+
