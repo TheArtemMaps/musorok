@@ -1,9 +1,0 @@
-﻿E:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: каталог Output заканчивается не косой чертой.  Этот экземпляр сборки добавит косую черту, поскольку она необходима для правильного определения каталога Output.
-  Main.cpp
-E:\111 GTA PLUGINS MODDING\rubbish-sa\source\Main.cpp(28,1): warning C4102: patch: неиспользованная метка
-  Rubbish.cpp
-E:\111 GTA PLUGINS MODDING\rubbish-sa\source\Rubbish.cpp(484,25): warning C4018: <: несоответствие типов со знаком и без знака
-E:\111 GTA PLUGINS MODDING\rubbish-sa\source\Rubbish.cpp(497,78): warning C4018: <: несоответствие типов со знаком и без знака
-  Создание кода...
-  rubbish-sa.vcxproj -> E:\Cleans GTA'S\RubbishSA.asi
-  Скопировано файлов:         1.
