@@ -122,7 +122,7 @@ void CRubbish::Init() {
 
 	CTxdStore::PushCurrentTxd();
 	int32_t slot2 = CTxdStore::AddTxdSlot("rubbishSA");
-	CTxdStore::LoadTxd(slot2, "MODELS\\RUBBISHSA.TXD");
+	CTxdStore::LoadTxd(slot2, GAME_PATH((char*)"MODELS\\RUBBISHSA.TXD"));
 	int32_t slot = CTxdStore::FindTxdSlot("rubbishSA");
 	CTxdStore::SetCurrentTxd(slot);
 
