@@ -20,8 +20,6 @@
 #include <filesystem>
 
 #include "ini.h"
-#include "CMessages.h"
-
 //#define RUBBISH_MAX_DIST (23.0f) // Rubbish max view distance
 //#define RUBBISH_FADE_DIST (20.0f) // Rubbish fade distance
 
@@ -52,6 +50,8 @@ int32_t CRubbish::RubbishAlphaNight;
 
 float CRubbish::widthScale[63];
 float CRubbish::heightScale[63];
+
+
 
 inline float RandomFloat(float min, float max)
 {
@@ -122,12 +122,12 @@ void CRubbish::Init() {
 
 	CTxdStore::PushCurrentTxd();
 	int32_t slot2 = CTxdStore::AddTxdSlot("rubbishSA");
-	CTxdStore::LoadTxd(slot2, "MODELS\\RUBBISHSA.TXD");
+	CTxdStore::LoadTxd(slot2, GAME_PATH((char*)"MODELS\\RUBBISHSA.TXD"));
 	int32_t slot = CTxdStore::FindTxdSlot("rubbishSA");
 	CTxdStore::SetCurrentTxd(slot);
 
 	//Rubbish ini load
-	mINI::INIFile file("MODELS\\rubbishSA.ini");
+	mINI::INIFile file(GAME_PATH((char*)"MODELS\\rubbishSA.ini"));
 	mINI::INIStructure ini;
 	file.read(ini);
 
@@ -241,6 +241,7 @@ void CRubbish::Shutdown() {
 }
 
 void CRubbish::Render() {
+
 	if (RubbishVisibility == 0 || CGame::currArea > 0)
 		return;
 
@@ -524,6 +525,7 @@ void CRubbish::Update() {
 		}
 	}
 
+
 	for (int32_t i = (CTimer::m_FrameCounter % (NUM_RUBBISH_SHEETS / 4)) * 4; i < ((CTimer::m_FrameCounter % (NUM_RUBBISH_SHEETS / 4)) + 1) * 4; i++) {
 		if (aSheets[i].m_state == 1 &&
 			(aSheets[i].m_basePos - TheCamera.GetPosition()).MagnitudeSqr2D() > SQR(RUBBISH_MAX_DIST + 1.0f)) {
@@ -545,9 +547,6 @@ void COneSheet::AddToList(COneSheet* list) {
 	this->m_next->m_prev = this;
 }
 
-/*void CRubbish::Invisible(bool invisibility2) {
-	invisibility = !invisibility2;
-}*/
 
 void COneSheet::RemoveFromList() {
 	m_next->m_prev = m_prev;

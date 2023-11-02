@@ -58,7 +58,6 @@ public:
 	static void StirUp(CVehicle* veh);
 	static void Update();
 	static bool GetWaterLevelNoWaves(float x, float y, float z, float* pOutWaterLevel, float* fUnkn1, float* fUnkn2);
-	//static void Invisible(bool invisibility2);
 	static void SetVisibility(bool visible);
 	static void Init();
 	static void Shutdown();

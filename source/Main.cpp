@@ -4,6 +4,8 @@
 #include <filesystem>
 #include "debugmenu_public.h"
 #include "game_sa\CBike.h"
+#include "ini.h"
+#include "CMessages.h"
 using namespace plugin;
 DebugMenuAPI gDebugMenuAPI;
 namespace fs = std::filesystem;
@@ -20,13 +22,13 @@ public:
         plugin::Events::gameProcessEvent += []() {
             CRubbish::Update();
         };
+
         movingThingsEvent += []() {
             CRubbish::Render();
         };
         plugin::Events::shutdownRwEvent += []() {
             CRubbish::Shutdown();
         };
-        patch:
         if (DebugMenuLoad()) {
             //DebugMenuAddVar("Rendering", "Rubbish visibility", &CRubbish::RubbishVisibility, NULL, 5.0f, 5.0f, 1000.0f, NULL);
             DebugMenuAddVarBool8("Rendering", "Rubbish invisible", (int8_t*)&CRubbish::bRubbishInvisible, NULL);
@@ -38,7 +40,8 @@ public:
             // The file exists, do nothing
         }
         else {
-            MessageBox(HWND_DESKTOP, "rubbishSA.ini cannot be found in models folder. The game will continue to load, but will crash on loading screen.", "rubbishSA.asi", MB_ICONERROR);
+            MessageBox(HWND_DESKTOP, "rubbishSA.ini cannot be found in models folder. The game will not launch without it.", "RubbishSA.asi", MB_ICONERROR);
+            exit(1); // Exit if not found
         }
 
         onProcessControl2 += [](CAutomobile* _this) {
@@ -48,7 +51,8 @@ public:
             // The file exists, do nothing
         }
         else {
-            MessageBox(HWND_DESKTOP, "rubbishSA.txd cannot be found in models folder. The game will continue to load, but will crash on loading screen.", "rubbishSA.asi", MB_ICONERROR);
+            MessageBox(HWND_DESKTOP, "rubbishSA.txd cannot be found in models folder. The game will not launch without it.", "RubbishSA.asi", MB_ICONERROR);
+            exit(1); // Exit if not found
         }
     }
 } rubbishSA;
