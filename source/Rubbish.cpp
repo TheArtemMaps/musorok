@@ -1,9 +1,9 @@
 
+#define FMT_HEADER_ONLY
 #include "plugin.h"
 
 #include "Rubbish.h"
 #include "RenderBuffer.h"
-
 #include "CGeneral.h"
 #include "CTimer.h"
 #include "CWeather.h"
@@ -16,8 +16,9 @@
 #include "Utility.h"
 #include "CCullZones.cpp"
 #include "CGame.h"
-#include <format>
 #include <filesystem>
+#include <format>
+
 
 #include "ini.h"
 //#define RUBBISH_MAX_DIST (23.0f) // Rubbish max view distance
@@ -119,22 +120,21 @@ void CRubbish::Init() {
 	RubbishIndexList[3] = 1;
 	RubbishIndexList[4] = 3;
 	RubbishIndexList[5] = 2;
-
-	CTxdStore::PushCurrentTxd();
-	int32_t slot2 = CTxdStore::AddTxdSlot("rubbishSA");
-	CTxdStore::LoadTxd(slot2, GAME_PATH((char*)"MODELS\\RUBBISHSA.TXD"));
-	int32_t slot = CTxdStore::FindTxdSlot("rubbishSA");
-	CTxdStore::SetCurrentTxd(slot);
+		CTxdStore::PushCurrentTxd();
+		int32_t slot2 = CTxdStore::AddTxdSlot("rubbishSA");
+		CTxdStore::LoadTxd(slot2, PLUGIN_PATH((char*)"MODELS\\RUBBISHSA.TXD"));
+		int32_t slot = CTxdStore::FindTxdSlot("rubbishSA");
+		CTxdStore::SetCurrentTxd(slot);
 
 	//Rubbish ini load
-	mINI::INIFile file(GAME_PATH((char*)"MODELS\\rubbishSA.ini"));
+	mINI::INIFile file(PLUGIN_PATH((char*)"MODELS\\rubbishSA.ini"));
 	mINI::INIStructure ini;
 	file.read(ini);
 
 	//Auto-detect rubbish count	
 	for (int32_t i = 0; i < 63; i++)
 	{
-	
+
 		std::string name = "RUBBISH";
 		std::string formatted_str = std::format(
 			"{}{}", name,
@@ -142,7 +142,7 @@ void CRubbish::Init() {
 
 		const char* formatted_str2 = formatted_str.c_str();
 		std::string strb = ini.get(formatted_str2).get("heightscale");
-		const char* strb2 = strb.c_str();		
+		const char* strb2 = strb.c_str();
 
 		if (strb.empty()) {
 			//RubbishTotalTexturesCount2 *= 2;
@@ -245,6 +245,8 @@ void CRubbish::Render() {
 	if (RubbishVisibility == 0 || CGame::currArea > 0)
 		return;
 
+
+
 	RwRenderStateSet(rwRENDERSTATEZWRITEENABLE, (void*)FALSE);
 	RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)TRUE);
 	RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)TRUE);
@@ -260,7 +262,7 @@ void CRubbish::Render() {
 			sheet < &aSheets[(i + 1) * NUM_RUBBISH_SHEETS / RubbishTotalTexturesCount];
 			sheet++) {
 			if (sheet->m_state == 0)
-				continue;		
+				continue;
 
 			uint32_t alpha = RubbishAlpha;
 
@@ -270,7 +272,7 @@ void CRubbish::Render() {
 			float x = int(alphanightdiff2);
 
 			float daynighbalance = injector::ReadMemory<float>(0x8D12C0, 0);
-			x *= daynighbalance;		
+			x *= daynighbalance;
 
 			int x2 = float(x);
 			alpha -= x2;
@@ -294,7 +296,7 @@ void CRubbish::Render() {
 			float camDist = (pos - TheCamera.GetPosition()).Magnitude2D();
 			if (camDist < RUBBISH_MAX_DIST) {
 				if (camDist >= RUBBISH_FADE_DIST)
- 					alpha -= alpha * (camDist - RUBBISH_FADE_DIST) / (RUBBISH_MAX_DIST - RUBBISH_FADE_DIST);
+					alpha -= alpha * (camDist - RUBBISH_FADE_DIST) / (RUBBISH_MAX_DIST - RUBBISH_FADE_DIST);
 				alpha = (RubbishVisibility * alpha) / 256;
 
 				float vx1, vx2;
@@ -424,7 +426,7 @@ void CRubbish::Update() {
 		float spawnDist;
 		float spawnAngle;
 
-		spawnDist = (GetRandomNumber() & 0xFF) / 256.0f + RUBBISH_MAX_DIST;
+			spawnDist = (GetRandomNumber() & 0xFF) / 256.0f + RUBBISH_MAX_DIST;
 		uint8_t r = GetRandomNumber();
 		if (r & 1)
 			spawnAngle = (GetRandomNumber() & 0xFF) / 256.0f * 6.28f;

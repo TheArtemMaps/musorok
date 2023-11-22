@@ -22,7 +22,8 @@ project "rubbish-sa"
 	
 	libdirs { 
 		"$(PLUGIN_SDK_DIR)/output/lib/",
-		"$(DXSDK_DIR)/Lib/x86"
+		"$(DXSDK_DIR)/Lib/x86",
+		"O:/fmt-10.1.1/bin/Release"
 	}
 	
 	
@@ -49,7 +50,7 @@ project "rubbish-sa"
 		postbuildcommands "copy /y \"$(TargetPath)\" \"$(GTA_SA_DIR)\\RubbishSA.asi\""
 
 	filter "configurations:Release"
-		links { "plugin" }
+		links { "plugin", "fmt" }
 		targetname "RubbishSA"
 		defines { "NDEBUG" }
 		symbols "off"

@@ -6,6 +6,7 @@
 #include "game_sa\CBike.h"
 #include "ini.h"
 #include "CMessages.h"
+#include "CAudioEngine.h"
 using namespace plugin;
 DebugMenuAPI gDebugMenuAPI;
 namespace fs = std::filesystem;
@@ -36,23 +37,23 @@ public:
         onProcessControl += [](CBike* _this) {
             CRubbish::StirUp(_this);
         };
-        if (fs::exists(GAME_PATH((char*)"MODELS\\rubbishSA.ini"))) {
+        if (fs::exists(PLUGIN_PATH((char*)"MODELS\\rubbishSA.ini"))) {
             // The file exists, do nothing
         }
         else {
             MessageBox(HWND_DESKTOP, "rubbishSA.ini cannot be found in models folder. The game will not launch without it.", "RubbishSA.asi", MB_ICONERROR);
-            exit(1); // Exit if not found
+            exit(0); // Exit if not found
         }
 
         onProcessControl2 += [](CAutomobile* _this) {
             CRubbish::StirUp(_this);
         };
-        if (fs::exists(GAME_PATH((char*)"MODELS\\RUBBISHSA.TXD"))) {
+        if (fs::exists(PLUGIN_PATH((char*)"MODELS\\RUBBISHSA.TXD"))) {
             // The file exists, do nothing
         }
         else {
             MessageBox(HWND_DESKTOP, "rubbishSA.txd cannot be found in models folder. The game will not launch without it.", "RubbishSA.asi", MB_ICONERROR);
-            exit(1); // Exit if not found
+            exit(0); // Exit if not found
         }
     }
 } rubbishSA;
